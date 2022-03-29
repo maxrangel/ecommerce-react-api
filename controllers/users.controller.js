@@ -69,9 +69,6 @@ exports.createUser = catchAsync(async (req, res, next) => {
 	// Remove password from response
 	newUser.password = undefined;
 
-	// Send welcome Email to user
-	await new Email(newUser.email).sendWelcome(newUser.name, newUser.email);
-
 	res.status(201).json({
 		status: 'success',
 		data: { user: newUser },
