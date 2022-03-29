@@ -8,7 +8,6 @@ const { User } = require('../models/user.model');
 // Utils
 const { AppError } = require('../utils/appError');
 const { catchAsync } = require('../utils/catchAsync');
-const { Email } = require('../utils/email');
 const { filterObj } = require('../utils/filterObj');
 
 dotenv.config({ path: './config.env' });
