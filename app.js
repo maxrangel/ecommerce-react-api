@@ -40,12 +40,12 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 else app.use(morgan('combined'));
 
 // Limit requests from same API
-const limiter = rateLimit({
-	max: 100,
-	windowMs: 60 * 60 * 1000, // 1 hour
-	message: 'Too many requests from this IP, please try again in an hour!',
-});
-app.use('/api', limiter);
+// const limiter = rateLimit({
+// 	max: 10000,
+// 	windowMs: 60 * 60 * 1000, // 1 hour
+// 	message: 'Too many requests from this IP, please try again in an hour!',
+// });
+// app.use('/api', limiter);
 
 // Body parser, reading data from the body into req.body
 app.use(express.json());
