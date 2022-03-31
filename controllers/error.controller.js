@@ -1,7 +1,7 @@
 // Utils
 const { AppError } = require('../utils/appError');
 
-const sendErrorDev = (err, req, res, next) => {
+const sendErrorDev = (err, req, res) => {
 	const statusCode = err.statusCode || 500;
 	const status = err.status || 'fail';
 
@@ -13,7 +13,7 @@ const sendErrorDev = (err, req, res, next) => {
 	});
 };
 
-const sendErrorProd = (err, req, res, next) => {
+const sendErrorProd = (err, req, res) => {
 	return res.status(err.statusCode).json({
 		status: err.status,
 		message: err.message || 'Something went wrong!',
@@ -43,9 +43,10 @@ const globalErrorHandler = (err, req, res, next) => {
 
 	// Validate if its production environment
 	if (process.env.NODE_ENV === 'development') {
-		sendErrorDev(err, req, res, next);
+		sendErrorDev(err, req, res);
 	} else if (process.env.NODE_ENV === 'production') {
 		let error = { ...err };
+		error.message = err.message;
 
 		// Catch known errors
 		if (err.name === 'SequelizeUniqueConstraintError')
@@ -56,7 +57,7 @@ const globalErrorHandler = (err, req, res, next) => {
 		else if (err.name === 'SequelizeValidationError')
 			error = handleSequelizeValidationError(err);
 
-		sendErrorProd(error, req, res, next);
+		sendErrorProd(error, req, res);
 	}
 };
 

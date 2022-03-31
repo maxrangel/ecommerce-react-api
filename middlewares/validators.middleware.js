@@ -44,6 +44,12 @@ exports.createProductValidations = [
 	// Price must be a decimal
 	body('price')
 		.isDecimal()
+		.withMessage('Price must be a decimal')
+		.custom(value => value > 0)
+		.withMessage('Enter a valid price'),
+	body('quantity')
+		.isNumeric()
+		.withMessage('Quantity must be a number')
 		.custom(value => value > 0)
 		.withMessage('Enter a valid price'),
 	body('categoryId')

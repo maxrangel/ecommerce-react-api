@@ -14,10 +14,10 @@ const db = new Sequelize({
 	dialectOptions:
 		process.env.NODE_ENV === 'production'
 			? {
-					ssl: {
-						require: true,
-						rejectUnauthorized: false,
-					},
+					// ssl: {
+					// 	require: true,
+					// 	rejectUnauthorized: false,
+					// },
 			  }
 			: {},
 });

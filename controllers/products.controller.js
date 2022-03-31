@@ -85,13 +85,15 @@ exports.getProductDetails = catchAsync(async (req, res, next) => {
 });
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-	const { title, description, price, categoryId } = req.body;
+	const { title, description, price, quantity, brand, categoryId } = req.body;
 	const { currentUser } = req;
 
 	const newProduct = await Product.create({
 		title,
 		description,
 		price,
+		quantity,
+		brand,
 		categoryId,
 		userId: currentUser.id,
 	});
@@ -120,6 +122,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 	const filteredObj = filterObj(
 		req.body,
 		'name',
+		'brand',
 		'description',
 		'price',
 		'quantity',
