@@ -9,7 +9,7 @@ const { AppError } = require('../utils/appError');
 
 exports.purchaseCart = catchAsync(async (req, res, next) => {
 	const { currentUser } = req;
-	const { street, colony, zipCode, city, references } = req.body;
+
 	// 1st part:
 	// Get user's cart and get the products of the cart
 	const cart = await Cart.findOne({
@@ -27,8 +27,6 @@ exports.purchaseCart = catchAsync(async (req, res, next) => {
 	await Purchase.create({
 		userId: currentUser.id,
 		cartId: cart.id,
-		address: `${street}, ${colony}, ${city}, CP. ${zipCode}`,
-		references,
 	});
 
 	// Set Cart status to 'purchased'

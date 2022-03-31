@@ -40,6 +40,7 @@ exports.createProductValidations = [
 		.isString()
 		.notEmpty()
 		.withMessage('Enter a valid description'),
+	body('brand').isString().notEmpty().withMessage('Enter a valid brand name'),
 	// Price must be a decimal
 	body('price')
 		.isDecimal()

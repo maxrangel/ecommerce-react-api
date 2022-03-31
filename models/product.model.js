@@ -20,11 +20,19 @@ const Product = db.define(
 			allowNull: false,
 		},
 		description: {
-			type: DataTypes.STRING(255),
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		brand: {
+			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
 		price: {
 			type: DataTypes.DECIMAL(10, 2),
+			allowNull: false,
+		},
+		quantity: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 		categoryId: {

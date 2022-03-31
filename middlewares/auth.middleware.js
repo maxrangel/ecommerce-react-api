@@ -12,6 +12,7 @@ const { Product } = require('../models/product.model');
 // Utils
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
+const { async } = require('@firebase/util');
 
 dotenv.config({ path: './config.env' });
 
@@ -62,13 +63,9 @@ exports.protectProductOwner = catchAsync(async (req, res, next) => {
 	next();
 });
 
-// exports.protectUser = catchAsync(async (req, res, next) => {
-// 	const { currentUser } = req; // Id Fernando
-// 	const { id } = req.params; // Max
-
-// 	if (+currentUser.id !== +id) {
-// 		return next(new AppError('You do not own this account', 401));
-// 	}
-
-// 	next();
-// });
+exports.protectAdmin = catchAsync(async (req, res, next) => {
+	if (req.currentUser.role !== 'admin') {
+		return next(new AppError('Access denied', 403));
+	}
+	next();
+});

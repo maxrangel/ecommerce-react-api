@@ -56,7 +56,7 @@ exports.getUserById = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
-	const { firstName, lastName, email, password, phone } = req.body;
+	const { firstName, lastName, email, password, phone, role } = req.body;
 
 	const newUser = await User.create({
 		firstName,
@@ -64,6 +64,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 		email,
 		password,
 		phone,
+		role: role || 'normal',
 	});
 
 	// Remove password from response

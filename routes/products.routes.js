@@ -16,6 +16,7 @@ const {
 const {
 	protectSession,
 	protectProductOwner,
+	protectAdmin,
 } = require('../middlewares/auth.middleware');
 const {
 	createProductValidations,
@@ -28,8 +29,6 @@ const { multerUpload } = require('../utils/multer'); // multipart/form-data
 
 const router = express.Router();
 
-router.use(protectSession);
-
 // Get all products
 // Create new product
 router
@@ -37,6 +36,8 @@ router
 	.get(getAllProducts)
 	.post(
 		multerUpload.fields([{ name: 'productImgs', maxCount: 3 }]),
+		protectSession,
+		protectAdmin,
 		// multerUpload.single('productImg'),
 		createProductValidations,
 		validateResult,
@@ -44,13 +45,19 @@ router
 	);
 
 // Get produts listed by the user
-router.get('/user-products', getUserProducts);
+router.get('/user-products', protectSession, getUserProducts);
 
 // Get products' categories
 router
 	.route('/categories')
 	.get(getCategories)
-	.post(createCategoryValidations, validateResult, createCategory);
+	.post(
+		protectSession,
+		protectAdmin,
+		createCategoryValidations,
+		validateResult,
+		createCategory
+	);
 
 // Get product's details
 // Update product
@@ -59,7 +66,7 @@ router
 	.use('/:id', productExists)
 	.route('/:id')
 	.get(getProductDetails)
-	.patch(protectProductOwner, updateProduct)
-	.delete(protectProductOwner, disableProduct);
+	.patch(protectSession, protectAdmin, protectProductOwner, updateProduct)
+	.delete(protectSession, protectAdmin, protectProductOwner, disableProduct);
 
 module.exports = { productsRouter: router };
