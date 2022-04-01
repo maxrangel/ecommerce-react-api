@@ -8,13 +8,13 @@ exports.formatProducts = products =>
 			status,
 			user,
 			productImgs,
-			category: { name },
+			category,
 		}) => {
 			return {
 				id,
 				title,
 				description,
-				category: name,
+				category,
 				price,
 				status,
 				user,
